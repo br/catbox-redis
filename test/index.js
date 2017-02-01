@@ -92,7 +92,7 @@ describe('Redis', () => {
         });
     });
 
-    it('gets an item after setting it', (done) => {
+    it('gets an item after settig it', (done) => {
 
         const client = new Catbox.Client(Redis);
         client.start((err) => {
@@ -516,6 +516,24 @@ describe('Redis', () => {
                 expect(client).to.exist();
                 expect(client.connected).to.equal(true);
                 expect(client.address).to.equal(options.socket);
+                done();
+            });
+        });
+
+        it('connects via a Redis URL when one is provided.', (done) => {
+
+            const options = {
+                url: 'redis://127.0.0.1:6379'
+            };
+
+            const redis = new Redis(options);
+
+            redis.start((err) => {
+
+                expect(err).to.not.exist();
+                const client = redis.client;
+                expect(client).to.exist();
+                expect(client.connected).to.equal(true);
                 done();
             });
         });
